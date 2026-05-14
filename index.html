@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Icon Gallery BETA v1.2</title>
+    <link rel="icon" type="image/x-icon" href="/assets/pageIcon.ico">
+    <meta property="og:title" content="Icon Gallery v1.2"/>
+    <meta property="og:description" content="Museum of Geometry Dash free-to-use icons!"/>
+    <meta property="og:image" content="https://iconsgallery.pages.dev/assets/embedIcon.png"/>
+    <meta name="twitter:card" content="summary">
+    <link rel="stylesheet" href="gallery.css">
+</head>
+<body>
+
+    <div class="logo-area">
+        <img src="assets/GALLERY.png" width="700px" alt="GD Icon Gallery">
+    </div>
+
+    <div id="portraitWarning">
+        <img src="assets/GALLERY.png" width="90%" style="max-width: 520px; margin-bottom: 20px;">
+        <h1 class="font-golden" style="font-size: 2.5rem; -webkit-text-stroke: 1.5px black; text-align: center; display: inline;">Rotate your device!</h1>
+        <p class="font-pusab" style="margin-top: 15px; margin-bottom: 25px; font-size: 1.2rem; text-align: center; -webkit-text-stroke: 3.8px black; paint-order: stroke fill; filter: drop-shadow(4px 3px 0px rgba(0, 0, 0, 0.35));">
+            This gallery is best viewed in landscape!<br>
+            aka, on a wider screen.<br>
+            If you still wanna browse without<br> 
+            rotating your phone, though...<br>
+            You can! Just click the button below.<br><br>
+
+            Esta página web se ve mejor en landscape<br>
+            (osea, en horizontal)<br>
+            Si aún así quieres verla en<br>
+            vertical y no voltear tu teléfono...<br>
+            También puedes! Clickea el botón de abajo.
+        </p>
+
+        <button id="btnDismissWarning" class="gd-btn btn-green font-pusab" style="font-size: 1.5rem;">Continue Anyway</button>
+    </div>
+
+    <div class="gd-frame-overlay"></div>
+
+    <div id="statsLabel" class="stats-label font-golden">Total Icons: 0</div>
+
+    <div class="gd-list-container" id="listContainer">
+        <div id="iconGrid" class="icon-grid view-list"></div>
+        <div id="emptyState" style="display:none;" class="state-message font-pusab"><p>No icons found.</p></div>
+        <div id="loadingState" style="display:none;" class="state-message font-pusab"><p>Loading icons...</p></div>
+    </div>
+
+    <img src="assets/search.png" class="btn-search-corner" id="btnOpenSearch" width="80px" alt="Search">
+    <div class="btn-page-corner gd-big-btn btn-blue" id="btnOpenPagePopup" title="Go to Page">
+        <span id="pageBtnText" class="font-pusab" style="font-size: 2.7rem; -webkit-text-stroke: 2.2px black; filter: drop-shadow(3.5px 2px 0px rgba(0, 0, 0, 0.3)); margin-left: -6px;">1</span>
+    </div>
+
+    <button id="btnPrevPage" class="nav-btn nav-prev" style="display: none;"></button>
+    <button id="btnNextPage" class="nav-btn nav-next" style="display: none;"></button>
+
+    <div class="popup-overlay" id="pagePopup">
+        <div class="popup-box">
+            <button class="popup-close" id="btnClosePage"></button> 
+            <h2 class="popup-title font-golden">Go to page</h2>
+            <input type="number" id="pageInput" placeholder="Page number..." class="search-input font-helvetica" min="1">
+            <button class="gd-btn btn-green font-pusab" id="btnRunPage" style="margin-top: 10px;">Go</button> 
+        </div>
+    </div>
+
+    <a href="https://gallerysubmit.pages.dev/"><img src="assets/submit.png" class="btn-submit-corner" width="160px" alt="Submit Icon"></a>
+    <img src="assets/settings.png" class="btn-settings-corner" id="btnOpenSettings" width="100px" alt="Settings">
+
+    <div class="menu-toggles font-pusab">
+        <label class="checkbox-wrap"><input type="checkbox" id="showGlow"><span class="checkmark"></span>Show Glow</label>
+        <label class="checkbox-wrap"><input type="checkbox" id="includeMediumPorts"><span class="checkmark"></span>Include Medium Ports (HD)</label>
+    </div>
+
+    <div class="menu-views">
+        <button class="view-btn" id="viewGrid" title="Grid View"></button>
+        <button class="view-btn active" id="viewList" title="List View"></button>
+    </div>
+
+    <div class="menu-filters font-pusab">
+        <label class="filter-label font-pusab">Filter:</label>
+        <select id="authorFilter" class="gd-select"><option value="">All Authors</option></select>
+        <select id="formatFilter" class="gd-select"><option value="">All Formats</option><option value="vanilla">Vanilla</option><option value="more-icons">More Icons</option></select>
+        
+        <select id="projectFilter" class="gd-select">
+            <option value="all">All Content</option>
+            <option value="has_project">Has Project Files</option>
+            <option value="no_project">No Project Files</option>
+        </select>
+
+        <label class="filter-label font-pusab">Order by:</label>
+        <select id="orderFilter" class="gd-select">
+            <option value="newest">Newest First</option>
+            <option value="downloads">Most Downloaded</option> <option value="name-asc">Name (A–Z)</option>
+            <option value="name-desc">Name (Z–A)</option>
+            <option value="author-asc">Author (A–Z)</option>
+        </select>
+    </div>
+
+    <div class="menu-gamemodes" id="gamemodeFilters">
+        <button class="mode-btn active" data-mode="all"></button><button class="mode-btn" data-mode="Cube"></button>
+        <button class="mode-btn" data-mode="Ship"></button><button class="mode-btn" data-mode="Ball"></button>
+        <button class="mode-btn" data-mode="UFO"></button><button class="mode-btn" data-mode="Wave"></button>
+        <button class="mode-btn" data-mode="Robot"></button><button class="mode-btn" data-mode="Spider"></button>
+        <button class="mode-btn" data-mode="Swing"></button><button class="mode-btn" data-mode="Jetpack"></button>
+    </div>
+
+    <div class="popup-overlay" id="searchPopup">
+        <div class="popup-box">
+            <button class="popup-close" id="btnCloseSearch"></button> <h2 class="popup-title font-golden">Search Icons</h2>
+            <input type="text" id="searchInput" placeholder="Enter name or author..." class="search-input font-helvetica">
+            <button class="gd-btn btn-green font-pusab" id="btnRunSearch">Search</button> </div>
+    </div>
+
+    <div class="popup-overlay" id="settingsPopup">
+        <div class="popup-box">
+            <button class="popup-close" id="btnCloseSettings"></button> <h2 class="popup-title font-golden">Settings</h2>
+
+            <div style="display: flex; align-items: center; justify-content: center; margin-bottom: 10px;">
+                <label class="checkbox-wrap font-pusab" style="margin-right: 10px;">
+                    <input type="checkbox" id="basicPreviewCheck"><span class="checkmark"></span>Basic Preview
+                </label>
+                <img src="assets/infoIcon.png" id="btnInfoBasicPreview" class="info-btn" alt="Info">
+            </div>
+
+            <label class="checkbox-wrap font-pusab" style="justify-content: center; margin-bottom: 10px;">
+                <input type="checkbox" id="overrideColors"><span class="checkmark"></span>Override Colors
+            </label>
+            <div class="color-field font-pusab"><span>Col 1</span><div class="color-swatch-wrap"><input type="color" id="overrideCol1" value="#AFAFAF"><div class="color-swatch" id="swatchCol1" style="background:#AFAFAF"></div></div></div>
+            <div class="color-field font-pusab"><span>Col 2</span><div class="color-swatch-wrap"><input type="color" id="overrideCol2" value="#ffffff"><div class="color-swatch" id="swatchCol2" style="background:#ffffff"></div></div></div>
+            <div class="color-field font-pusab"><span>Glow</span><div class="color-swatch-wrap"><input type="color" id="overrideGlow" value="#00ff00"><div class="color-swatch" id="swatchGlow" style="background:#00ff00"></div></div></div>
+            <button class="gd-btn btn-green font-pusab" id="btnSaveSettings" style="margin-top: 10px;">Save</button> </div>
+    </div>
+
+    <div class="popup-overlay" id="infoPopup">
+        <div class="popup-box" style="max-width: 500px;">
+            <button class="popup-close" id="btnCloseInfo"></button>
+            <h2 class="popup-title font-golden">Basic Preview</h2>
+            <p class="font-pusab" style="font-size: 1.45rem; line-height: 1.4; text-align: left; -webkit-text-stroke: 5px black; paint-order: stroke fill; filter: drop-shadow(3px 2px 0px rgba(0, 0, 0, 0.3));">
+                When enabled, icons will load as static images rather than rendering live. This basically means: <br><br>
+                <span style="color: #00ff0d;">- Faster icon loading.</span><br>
+                <span style="color: #00ff0d;">- Fixes missing previews on Mobile.</span><br>
+                <span style="color: #ff0000;">- Disables color overriding.</span><br>
+                <span style="color: #ff0000;">- Disables glow previewing</span>
+            </p>
+        </div>
+    </div>
+
+    <footer class="site-footer font-helvetica"><p>
+        GD Icon Gallery Made by Asterveila - <a href="https://discord.gg/dceY3uvGzD">Discord</a> - <a href="https://x.com/Asterveila">Twitter</a><br>
+        Icon Rendering powered by <a href="https://gdbrowser.com/iconkit" target="_blank">GDBrowser</a>
+    </p></footer>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pixi.js/7.3.2/pixi.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    <script src="iconRenderer.js"></script>
+    <script src="gallery.js"></script>
+</body>
+</html>
