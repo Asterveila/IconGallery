@@ -1,4 +1,4 @@
-# IconGallery
+<img src="assets/GALLERY.png" width="80%">
 IconGallery is a website created for the Geometry Dash community, made to act as a museum of Public Icons people can download and install in their clients. This repo holds the BASE GALLERY, meaning it only holds the actual gallery functionality. Submission functionality is located in a different repo.
 
 ## Credits
