@@ -6,8 +6,9 @@ This repo holds the BASE GALLERY, meaning it only holds the actual gallery funct
 
 ## Credits
 
-- Asterveila: Main and sole developer (so far, lol)
+- Asterveila: Main developer.
+- [EthanHazel](https://github.com/EthanHazel): Contributor ~ UI Overhaul, optimizations and visual improvements.
 - Colon: Creator of GDBrowser and GDBrowser Icon Kit, which this website used as a base for its icon renderer engine.
+- RobTop: Game Assets & More
 - AsRen: Gallery Admin.
 - KetsuTT: Gallery Admin.
-- RobTop: Game Assets & More
