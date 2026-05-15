@@ -882,9 +882,13 @@ async function downloadIcon(icon) {
   downloadCounts[icon.id] = (downloadCounts[icon.id] || 0) + 1;
 
   const includeMedium = document.getElementById("includeMediumPorts").checked;
-  const baseName = icon.pngFile.name
+  const meta = icon.meta;
+  const iconRealName = icon.pngFile.name
     .replace(/-uhd\.png$/i, "")
     .replace(/\.png$/i, "");
+  const baseName = meta.iconName
+    .replace(" ", "_")
+  ;
 
   const zip = new JSZip();
   zip.file(icon.pngFile.name, icon.pngFile);
@@ -901,7 +905,7 @@ async function downloadIcon(icon) {
   }
 
   const blob = await zip.generateAsync({ type: "blob" });
-  triggerDownload(blob, baseName + ".zip");
+  triggerDownload(blob, baseName + "-(" + iconRealName + ")" + ".zip");
 }
 
 async function downloadProjectFiles(icon) {
