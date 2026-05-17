@@ -61,6 +61,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 function loadSettings() {
     const saved = localStorage.getItem("gdGalleryColors");
+    const savedFilename = localStorage.getItem("gdGalleryFilename") || "{iconName}-({iconFilenames})";
     if (saved) {
         const colors = JSON.parse(saved);
         document.getElementById("overrideCol1").value = colors.col1;
@@ -71,6 +72,7 @@ function loadSettings() {
         document.getElementById("swatchGlow").style.background = colors.glow;
     }
     document.getElementById("basicPreviewCheck").checked = isBasicPreview;
+    document.getElementById("customFilename").value = savedFilename;
 }
 
 function setupControls() {
@@ -108,16 +110,9 @@ function setupControls() {
             glow: document.getElementById("overrideGlow").value,
         };
         localStorage.setItem("gdGalleryColors", JSON.stringify(colors));
+        localStorage.setItem("gdGalleryFilename", fnInput.value);
         document.getElementById("settingsPopup").classList.remove("active");
         if (overrideColors) renderGallery();
-    });
-    document
-        .getElementById("btnInfoBasicPreview")
-        .addEventListener("click", () => {
-            document.getElementById("infoPopup").classList.add("active");
-        });
-    document.getElementById("btnCloseInfo").addEventListener("click", () => {
-        document.getElementById("infoPopup").classList.remove("active");
     });
 
     document
@@ -126,6 +121,25 @@ function setupControls() {
             isBasicPreview = e.target.checked;
             renderGallery();
         });
+
+    // popups
+    document.getElementById("btnInfoBasicPreview")
+        .addEventListener("click", () => {
+            document.getElementById("infoPopup").classList.add("active");
+        });
+    document.getElementById("btnCloseInfo")
+        .addEventListener("click", () => {
+        document.getElementById("infoPopup").classList.remove("active");
+    });
+
+    document.getElementById('btnInfoFilename')
+        .addEventListener('click', () => {
+        document.getElementById('filenameInfoPopup').classList.add('active');
+    });
+    document.getElementById('btnCloseFilenameInfo')
+        .addEventListener('click', () => {
+        document.getElementById('filenameInfoPopup').classList.remove('active');
+    });
 
     // page controls
     document.getElementById("btnPrevPage").addEventListener("click", () => {
@@ -166,6 +180,19 @@ function setupControls() {
         document.getElementById("pagePopup").classList.remove("active");
         document.getElementById("pageInput").value = ""; // clear input
     });
+
+    // filename input
+    const fnInput = document.getElementById("customFilename");
+    const fnHigh = document.getElementById("filenameHighlight");
+    function updateHighlight() {
+        const val = fnInput.value;
+        const safeVal = escHtml(val);
+        fnHigh.innerHTML = safeVal.replace(/({iconName}|{iconAuthor}|{iconFilenames}|{gamemode}|{format})/g, '<span style="color: #ffee00;">$1</span>');
+    }
+
+    fnInput.addEventListener("input", updateHighlight);
+    fnInput.addEventListener("scroll", () => fnHigh.scrollLeft = fnInput.scrollLeft);
+    updateHighlight();
 
     document
         .getElementById("authorFilter")
@@ -938,10 +965,18 @@ async function downloadIcon(icon) {
     const iconRealName = icon.pngFile.name
         .replace(/-uhd\.png$/i, "")
         .replace(/\.png$/i, "");
-    const baseName = meta.iconName.replace(" ", "_");
+    const template = document.getElementById("customFilename").value || "{iconName}-({iconFilenames})";
     const zip = new JSZip();
     zip.file(icon.pngFile.name, icon.pngFile);
     zip.file(icon.plistFile.name, icon.plistFile);
+
+    let baseName = template
+        .replace(/{iconName}/g, meta.iconName.replace(/ /g, "_"))
+        .replace(/{iconAuthor}/g, meta.author.replace(/ /g, "_"))
+        .replace(/{iconFilenames}/g, iconRealName)
+        .replace(/{gamemode}/g, meta.iconType)
+        .replace(/{format}/g, meta.format);
+    baseName = baseName.replace(/[^a-zA-Z0-9_\-\(\)\[\]\s]/g, "");
 
     if (includeMedium) {
         try {
@@ -954,7 +989,7 @@ async function downloadIcon(icon) {
     }
 
     const blob = await zip.generateAsync({ type: "blob" });
-    triggerDownload(blob, baseName + "-(" + iconRealName + ")" + ".zip");
+    triggerDownload(blob, baseName + ".zip");
 }
 
 async function downloadProjectFiles(icon) {

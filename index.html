@@ -129,7 +129,35 @@
             <div class="color-field font-pusab"><span>Col 1</span><div class="color-swatch-wrap"><input type="color" id="overrideCol1" value="#AFAFAF"><div class="color-swatch" id="swatchCol1" style="background:#AFAFAF"></div></div></div>
             <div class="color-field font-pusab"><span>Col 2</span><div class="color-swatch-wrap"><input type="color" id="overrideCol2" value="#ffffff"><div class="color-swatch" id="swatchCol2" style="background:#ffffff"></div></div></div>
             <div class="color-field font-pusab"><span>Glow</span><div class="color-swatch-wrap"><input type="color" id="overrideGlow" value="#00ff00"><div class="color-swatch" id="swatchGlow" style="background:#00ff00"></div></div></div>
+            
+            <h3 class="popup-title font-golden" style="font-size: 1.8rem; margin-top: 20px;">ADVANCED</h3>
+            <div style="display: flex; align-items: center; justify-content: center; margin-bottom: 5px;">
+                <span class="font-pusab" style="font-size: 1.1rem; -webkit-text-stroke: 1px black;">Download Filename</span>
+                <img src="assets/infoIcon.png" id="btnInfoFilename" class="info-btn" alt="Info" style="width: 25px; margin-left: 10px;">
+            </div>
+            
+            <div style="position: relative; width: 100%; text-align: left; margin-bottom: 10px;">
+                <div id="filenameHighlight" class="search-input font-helvetica" style="position: absolute; inset: 0; pointer-events: none; white-space: pre; overflow: hidden; color: #fff; background: rgba(0,0,0,0.4); border-color: transparent;"></div>
+                <input type="text" id="customFilename" class="search-input font-helvetica" style="position: relative; background: transparent; color: transparent; caret-color: white;" spellcheck="false">
+            </div>
+
             <button class="gd-btn btn-green font-pusab" id="btnSaveSettings" style="margin-top: 10px;">Save</button> </div>
+    </div>
+
+    <div class="popup-overlay" id="filenameInfoPopup">
+        <div class="popup-box" style="max-width: 500px;">
+            <button class="popup-close" id="btnCloseFilenameInfo"></button>
+            <h2 class="popup-title font-golden" style="font-size: 2.2rem;">Custom Filename</h2>
+            <p class="font-pusab" style="font-size: 1.45rem; line-height: 1.4; text-align: left; -webkit-text-stroke: 5px black; paint-order: stroke fill; filter: drop-shadow(3px 2px 0px rgba(0, 0, 0, 0.3));">
+                Allows you to customize the filename of the downloaded zip file containing the icon files, for all your fine organization needs!<br><br>
+                You can use the following variables:<br><br>
+                <span style="color: #7ade2d;">{iconName}</span> - The icon's name<br>
+                <span style="color: #7ade2d;">{iconAuthor}</span> - The icon's author<br>
+                <span style="color: #7ade2d;">{iconFilenames}</span> - The raw .png/.plist names<br>
+                <span style="color: #7ade2d;">{gamemode}</span> - The icon's gamemode<br>
+                <span style="color: #7ade2d;">{format}</span> - The icon's format
+            </p>
+        </div>
     </div>
 
     <div class="popup-overlay" id="infoPopup">
