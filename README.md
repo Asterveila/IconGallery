@@ -11,4 +11,5 @@ This repo holds the BASE GALLERY, meaning it only holds the actual gallery funct
 - Colon: Creator of GDBrowser and GDBrowser Icon Kit, which this website used as a base for its icon renderer engine.
 - RobTop: Game Assets & More
 - AsRen: Gallery Admin.
-- KetsuTT: Gallery Admin.
+- ExiTT: Gallery Admin.
+- Mistik: Gallery Admin.
