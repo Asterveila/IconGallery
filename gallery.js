@@ -3,7 +3,7 @@ fetch("assets/iconkit-data.json")
     .then(loadRobotAnimations)
     .catch(() => {
         console.warn(
-            "assets/iconkit-data.json not found — robot/spider poses will use approximations",
+            "assets/iconkit-data.json not found",
         );
     });
 
