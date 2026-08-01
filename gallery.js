@@ -49,11 +49,30 @@ let currentPage = 1;
 const iconsPerPage = 10;
 let currentRenderToken = 0;
 let isBasicPreview = /Android/i.test(navigator.userAgent);
-const API_BASE = "https://expiration-hit-supplier-manufacturer.trycloudflare.com";
+let API_BASE = "";
 
 const activeRenderers = new Map();
 
+/*
 document.addEventListener("DOMContentLoaded", () => {
+    loadSettings();
+    setupControls();
+    loadIconRegistry();
+});
+*/
+
+document.addEventListener("DOMContentLoaded", async () => {
+    try {
+        const res = await fetch("assets/API_BASE.txt");
+        if (res.ok) {
+            API_BASE = (await res.text()).trim();
+        } else {
+            console.warn("Failed to load API_BASE.txt");
+        }
+    } catch (err) {
+        console.error("Error fetching API_BASE.txt:", err);
+    }
+
     loadSettings();
     setupControls();
     loadIconRegistry();
