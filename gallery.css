@@ -771,8 +771,8 @@ OPTION {
   border-top: 5px solid #ffaa55;
   border-bottom: 6px solid #553311;
   box-shadow:
-    0 0 0 4px #000000,
-    0 0 0 6px #ffffff,
+    0 0 0 6px #000000,
+    0 0 0 8px #ffffff,
     0 10px 40px rgba(0, 0, 0, 0.8);
 }
 
