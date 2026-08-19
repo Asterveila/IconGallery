@@ -159,6 +159,9 @@ function setupControls() {
         .addEventListener('click', () => {
         document.getElementById('filenameInfoPopup').classList.remove('active');
     });
+    document.getElementById("btnCloseNotice").addEventListener("click", () => {
+        document.getElementById("noticePopup").classList.remove("active");
+    });
 
     // page controls
     document.getElementById("btnPrevPage").addEventListener("click", () => {
