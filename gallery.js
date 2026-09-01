@@ -335,32 +335,44 @@ async function parseGdicon(blob, sourcePath = "") {
     if (!pngEntry || !plistEntry)
         throw new Error("Missing PNG or PLIST inside " + sourcePath);
 
-    const pngBlob = new File([await pngEntry.async("blob")], pngEntry.name, {
-        type: "image/png",
-    });
-    const plistBlob = new File(
-        [await plistEntry.async("blob")],
-        plistEntry.name,
-        { type: "text/xml" },
-    );
-
     let previewBlob = null;
     const previewEntry = zip.file("preview.png");
     if (previewEntry) {
         previewBlob = new File(
             [await previewEntry.async("blob")],
             "preview.png",
-            {
-                type: "image/png",
-            },
+            { type: "image/png" },
         );
+    }
+
+    let _pngFile = null;
+    let _plistFile = null;
+
+    async function getPngFile() {
+        if (!_pngFile) {
+            _pngFile = new File([await pngEntry.async("blob")], pngEntry.name, {
+                type: "image/png",
+            });
+        }
+        return _pngFile;
+    }
+
+    async function getPlistFile() {
+        if (!_plistFile) {
+            _plistFile = new File(
+                [await plistEntry.async("blob")],
+                plistEntry.name,
+                { type: "text/xml" },
+            );
+        }
+        return _plistFile;
     }
 
     return {
         id: sourcePath,
         meta,
-        pngFile: pngBlob,
-        plistFile: plistBlob,
+        getPngFile,
+        getPlistFile,
         previewFile: previewBlob,
         sourcePath,
     };
@@ -577,9 +589,13 @@ async function setupIconImage(icon, card) {
     const renderer = new GdIconRenderer(tempCanvas, 200);
 
     try {
+        const [pngFile, plistFile] = await Promise.all([
+            icon.getPngFile(),
+            icon.getPlistFile(),
+        ]);
         await renderer.renderIcon(
-            icon.pngFile,
-            icon.plistFile,
+            pngFile,
+            plistFile,
             icon.meta,
             getColorOpts(),
         );
@@ -984,13 +1000,19 @@ async function downloadIcon(icon) {
 
     const includeMedium = document.getElementById("includeMediumPorts").checked;
     const meta = icon.meta;
-    const iconRealName = icon.pngFile.name
+
+    const [pngFile, plistFile] = await Promise.all([
+        icon.getPngFile(),
+        icon.getPlistFile(),
+    ]);
+
+    const iconRealName = pngFile.name
         .replace(/-uhd\.png$/i, "")
         .replace(/\.png$/i, "");
     const template = document.getElementById("customFilename").value || "{iconName}-({iconFilenames})";
     const zip = new JSZip();
-    zip.file(icon.pngFile.name, icon.pngFile);
-    zip.file(icon.plistFile.name, icon.plistFile);
+    zip.file(pngFile.name, pngFile);
+    zip.file(plistFile.name, plistFile);
 
     let baseName = template
         .replace(/{iconName}/g, meta.iconName.replace(/ /g, "_"))
@@ -1002,7 +1024,7 @@ async function downloadIcon(icon) {
 
     if (includeMedium) {
         try {
-            const { png, plist } = await portToHD(icon.pngFile, icon.plistFile);
+            const { png, plist } = await portToHD(pngFile, plistFile);
             zip.file(baseName + "-hd.png", png);
             zip.file(baseName + "-hd.plist", plist);
         } catch (err) {
