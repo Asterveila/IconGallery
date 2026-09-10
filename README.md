@@ -8,8 +8,12 @@ This repo holds the BASE GALLERY, meaning it only holds the actual gallery funct
 
 - Asterveila: Main developer.
 - [EthanHazel](https://github.com/EthanHazel): Contributor ~ UI Overhaul, optimizations and visual improvements.
+- [ML500](https://github.com/MasterL500): Creator of the Icon Gallery Geode mod. Created the page's icon.
 - Colon: Creator of GDBrowser and GDBrowser Icon Kit, which this website used as a base for its icon renderer engine.
 - RobTop: Game Assets & More
 - AsRen: Gallery Admin.
 - ExiTT: Gallery Admin.
 - Mistik: Gallery Admin.
+- OnlyYoichi: Gallery Admin.
+- iblond4: Gallery Admin.
+- reverie/Brickbattle: Gallery Admin.
