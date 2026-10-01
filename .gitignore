@@ -1,0 +1,10 @@
+# NodeJS
+/node_modules
+package.json
+package-lock.json
+
+# System Files
+.DS_Store
+[Dd]esktop.ini
+__MACOSX/
+.Spotlight-V100
